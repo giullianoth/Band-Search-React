@@ -14,6 +14,14 @@
                     }
                 }
             }
+
+            &_results {
+                &_list {
+                    &::-webkit-scrollbar-thumb {
+                        background-color: $color-highlight;
+                    }
+                }
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 @import "../loading/loading";
 @import "form";
+@import "band-list";
 @import "../dark-theme/main";
 
 @include theme() {
@@ -12,6 +13,7 @@
             
             @include loading;
             @include form;
+            @include bandList;
         }
     }
 }

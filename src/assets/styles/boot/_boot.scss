@@ -12,7 +12,7 @@ body {
     font-family: $font-montserrat;
 
     @include relative;
-    @include bgImage("../../images/background.png", no-repeat, contain);
+    @include bgImage("../../images/background.png");
     @include transition;
 
     &.dark_theme {

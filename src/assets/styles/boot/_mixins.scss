@@ -206,4 +206,11 @@
 
     border: none;
     background-color: $color-tertiary;
+    cursor: pointer;
+
+    svg {
+        @include setResponsiveDesign(375px) {
+            margin-right: 5px;
+        }
+    }
 }
