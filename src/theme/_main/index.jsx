@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Form from "./form";
 import Loading from "../loading";
-import BandList from "../band-list";
+import Content from "./form/content/content";
 
 const mainViewportDifference = () => {
 
@@ -51,10 +50,7 @@ const Main = () => {
 
     return (
         <main className="bs_main" style={{ height: `calc(100vh - ${mainHeightDifference}px)` }}>
-            <div className="bs_main_content">
-                <Form onSubmit={loadData} className={formClass} />
-                <BandList />
-            </div>
+            <Content onSubmit={loadData} className={formClass} />
             {/* {loading} */}
         </main>
     );

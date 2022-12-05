@@ -64,7 +64,7 @@ const BandList = () => {
     //     .catch((error) => {
     //         return error;
     //     })
-    
+
     const socialInfo = [
         {
             classifications: [
@@ -86,9 +86,23 @@ const BandList = () => {
     let socialNetworks = Object.keys(socialInfo[0]?.externalLinks) ?? null;
     let socialLinks = Object.values(socialInfo[0]?.externalLinks).map((item) => item[0].url) ?? null;
 
-    const listItems = [];
+    const listItems = [{
+        snippet: {
+            title: "Metallica: Enter Sandman (Official Music Video)",
+            description: "Metallica's official music video for “Enter Sandman,” from the album “Metallica.” Subscribe for more videos: ...",
+            thumbnails: {
+                medium: {
+                    url: "https://i.ytimg.com/vi/CD-E-LDc384/mqdefault.jpg"
+                }
+            }
+        },
 
-    for (let i = 0; i < 6; i++) {
+        id: {
+            videoId: "CD-E-LDc384"
+        }
+    }];
+
+    for (let i = 0; i < 3; i++) {
         listItems.push({
             snippet: {
                 title: "Metallica: Nothing Else Matters (Official Music Video)",
@@ -98,6 +112,10 @@ const BandList = () => {
                         url: thumbnail
                     }
                 }
+            },
+
+            id: {
+                videoId: "tAGnKpE4NCI"
             }
         });
     }
