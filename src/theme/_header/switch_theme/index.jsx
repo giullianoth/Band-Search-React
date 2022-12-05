@@ -3,6 +3,7 @@ import logoDark from "../../../assets/images/logo_dark.png";
 import logoLight from "../../../assets/images/logo_light.png";
 import CantSee from "../../../assets/images/cant-see.gif";
 import MyEyes from "../../../assets/images/my-eyes.gif";
+import Card from "./card";
 
 const SwitchTheme = () => {
 
@@ -33,9 +34,7 @@ const SwitchTheme = () => {
     return (
         <div className="bs_header_content_switch_theme">
             <div className="switch" onClick={changeTheme} title={card.title}></div>
-            <div className="card">
-                <div className="card_img" style={{ backgroundImage: `url(${card.img})` }}></div>
-            </div>
+            <Card image={card.img} />
         </div>
     );
 }

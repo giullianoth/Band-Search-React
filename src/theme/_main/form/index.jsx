@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
+import Input from "./input";
+import Button from "../../button";
 
 const Form = (props) => {
     return (
@@ -8,12 +10,9 @@ const Form = (props) => {
                 event.preventDefault();
                 props.onSubmit();
             }}>
-                <div className="label_area">
-                    <input type="text" name="band" id="band" required />
-                    <label htmlFor="band">Clique e digite o nome da banda aqui</label>
-                    <i className="bottom_bar"></i>
-                </div>
-                <button type="submit"><FontAwesomeIcon icon={solid("magnifying-glass")} /> Pesquisar</button>
+                <Input />
+                <Button type="submit" className="className" icon={<FontAwesomeIcon icon={solid("magnifying-glass")} />}>Pesquisar</Button>
+                {/* <button type="submit"><FontAwesomeIcon icon={solid("magnifying-glass")} /> Pesquisar</button> */}
             </form>
         </aside>
     );

@@ -15,7 +15,7 @@ const mainViewportDifference = () => {
             footerHeight = document.querySelector(".bs_footer")?.offsetHeight;
 
             if (headerHeight && footerHeight) {
-                resolve((headerHeight ?? 0) + (footerHeight ?? 0));
+                resolve(headerHeight + footerHeight);
                 clearInterval(getHeader);
             }
         }, 100);

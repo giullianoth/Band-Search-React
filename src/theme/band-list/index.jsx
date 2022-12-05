@@ -1,7 +1,7 @@
 import { useState } from "react";
 import thumbnail from "../../assets/images/samples/hqdefault.webp";
-import Social from "./social";
-import Video from "./video";
+import MainHeader from "./main-header";
+import MainResults from "./main-results";
 
 const listViewportDifference = () => {
 
@@ -22,17 +22,12 @@ const listViewportDifference = () => {
 
                 paddingDiff = window.innerWidth < 1024 ? 40 : 80;
                 listHeaderHeight = window.innerWidth < 1024 ? listHeaderHeight : 0;
-                
+
                 resolve(mainHeight - formHeight - listHeaderHeight - paddingDiff);
                 clearInterval(getList);
             }
         }, 100);
     })
-}
-
-const back = () => {
-    let form = document.querySelector(".bs_main_content_form");
-    form.classList.remove("list");
 }
 
 const BandList = () => {
@@ -57,6 +52,19 @@ const BandList = () => {
 
     const mainTitle = "Metallica";
 
+    // const socialInfo = await fetch("https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=metallica&apikey=q2GNlCrgGo6c8uej3Ib4MsbAC2KIr5nG")
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         data._embedded.attractions.forEach((attraction) => {
+    //             if (attraction.classifications.some((classification) => classification.segment.name === "Music")) {
+    //                 return attraction;
+    //             }
+    //         });
+    //     })
+    //     .catch((error) => {
+    //         return error;
+    //     })
+    
     const socialInfo = [
         {
             classifications: [
@@ -74,19 +82,14 @@ const BandList = () => {
         }
     ];
 
-    let socialNetworks = Object.keys(socialInfo[0].externalLinks);
-    let socialLinks = Object.values(socialInfo[0].externalLinks).map((item) => item[0].url);
 
-    // fetch("https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=metallica&apikey=q2GNlCrgGo6c8uej3Ib4MsbAC2KIr5nG")
-    //         .then((response) => {
-    //             return response.json();
-    //         })
-    //         .then((data) => {
-    //             console.log(data._embedded.attractions[0], socialInfo[0]);
-    //         })
+    let socialNetworks = Object.keys(socialInfo[0]?.externalLinks) ?? null;
+    let socialLinks = Object.values(socialInfo[0]?.externalLinks).map((item) => item[0].url) ?? null;
 
-    const listItems = [
-        {
+    const listItems = [];
+
+    for (let i = 0; i < 6; i++) {
+        listItems.push({
             snippet: {
                 title: "Metallica: Nothing Else Matters (Official Music Video)",
                 description: "Video Premiere Date: February 25, 1992 Follow Metallica: Website & Store: http://www.metallica.com Official Live ...",
@@ -96,66 +99,13 @@ const BandList = () => {
                     }
                 }
             }
-        },
-
-        {
-            snippet: {
-                title: "Metallica: Nothing Else Matters (Official Music Video)",
-                description: "Video Premiere Date: February 25, 1992 Follow Metallica: Website & Store: http://www.metallica.com Official Live ...",
-                thumbnails: {
-                    medium: {
-                        url: thumbnail
-                    }
-                }
-            }
-        },
-
-        {
-            snippet: {
-                title: "Metallica: Nothing Else Matters (Official Music Video)",
-                description: "Video Premiere Date: February 25, 1992 Follow Metallica: Website & Store: http://www.metallica.com Official Live ...",
-                thumbnails: {
-                    medium: {
-                        url: thumbnail
-                    }
-                }
-            }
-        },
-
-        {
-            snippet: {
-                title: "Metallica: Nothing Else Matters (Official Music Video)",
-                description: "Video Premiere Date: February 25, 1992 Follow Metallica: Website & Store: http://www.metallica.com Official Live ...",
-                thumbnails: {
-                    medium: {
-                        url: thumbnail
-                    }
-                }
-            }
-        }
-    ];
+        });
+    }
 
     return (
         <section className="bs_main_content_results">
-            <div className="bs_main_content_results_header">
-                <header className="bs_main_content_results_header_title">
-                    <h1>{mainTitle}</h1>
-                </header>
-
-                <ul className="bs_main_content_results_header_desc">
-                    {socialNetworks.map((item, index) =>
-                        <Social network={item} href={socialLinks[index]} key={index + 1} />
-                    )}
-                </ul>
-
-                <button className="back" onClick={back}>Voltar</button>
-            </div>
-
-            <div className="bs_main_content_results_list" style={{ height: `${listHeightDifference}px` }}>
-                {listItems.map((item, index) =>
-                    <Video data={item} key={index + 1} />
-                )}
-            </div>
+            <MainHeader data={socialNetworks} title={mainTitle} />
+            <MainResults data={listItems} height={listHeightDifference} />
         </section>
     );
 }
