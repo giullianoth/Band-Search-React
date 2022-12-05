@@ -122,7 +122,7 @@ const BandList = () => {
 
     return (
         <section className="bs_main_content_results">
-            <MainHeader data={socialNetworks} title={mainTitle} />
+            <MainHeader data={{ socialNetworks, socialLinks }} title={mainTitle} />
             <MainResults data={listItems} height={listHeightDifference} />
         </section>
     );
