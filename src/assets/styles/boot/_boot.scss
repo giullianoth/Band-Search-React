@@ -28,6 +28,11 @@ body {
         display: block;
         width: 100%;
     }
+
+    // embed, video, iframe, iframe[style] {
+    //     max-width: 100%;
+    //     height: auto;
+    // }
 }
 
 @mixin theme() {
@@ -43,3 +48,5 @@ body {
         }
     }
 }
+
+@import "../theme/modal/modal";

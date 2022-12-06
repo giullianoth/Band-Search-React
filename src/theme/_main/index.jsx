@@ -23,7 +23,7 @@ const mainViewportDifference = () => {
 
 const Main = () => {
     const [mainHeightDifference, setMainHeightDifference] = useState(0);
-    const [formClass, setFormClass] = useState(" list");
+    const [formClass, setFormClass] = useState("");
     const [loading, setLoading] = useState(null);
 
     mainViewportDifference().then((data) => {
@@ -51,7 +51,7 @@ const Main = () => {
     return (
         <main className="bs_main" style={{ height: `calc(100vh - ${mainHeightDifference}px)` }}>
             <Content onSubmit={loadData} className={formClass} />
-            {/* {loading} */}
+            {loading}
         </main>
     );
 }

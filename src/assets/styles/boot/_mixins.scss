@@ -167,6 +167,15 @@
     background-position: $position;
 }
 
+// EMBEDDED CONTAINER
+@mixin embedded() {
+    @include relative;
+	max-width: 100%;
+	height: 0;
+	padding-bottom: 56.25%;
+	overflow: hidden;
+}
+
 // ANIMATION
 @mixin animation($name, $setup, $animation-duration: 1s, $animation-iteration-count: infinite, $animation-timing-function: ease-in-out) {
     animation: $name $animation-duration $animation-iteration-count $animation-timing-function;
