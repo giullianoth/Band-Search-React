@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 import Input from "./input";
-import Button from "../../button";
+import Button from "../button";
 import { useState } from "react";
 
 const formValue = () => document.querySelector(".bs_main_content_form input").value;
@@ -24,8 +24,9 @@ const mainHeight = () => {
 
 const Form = (props) => {
 
-    const[formListClass, setFormListClass] = useState("");
     const [mainHeightValue, setMainHeightValue] = useState(0);
+    const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(false);
 
     mainHeight().then((height) => {
         setMainHeightValue(height);
@@ -43,22 +44,16 @@ const Form = (props) => {
         })
     };
 
-    const validate = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        
-        let searchValue = formValue().trim();
-        
-        if (searchValue.length !== 0) {
-            setFormListClass(" list");
-            props.onSubmit();
-        }
+        console.log(search);
     }
 
     return (
-        <aside className={`bs_main_content_form${props.isListVisible ? " list" : ""}`} style={{maxHeight: `${mainHeightValue}px`}}>
-            <form action="" onSubmit={(event) => { validate(event) }}>
-                <Input />
-                <Button type="submit" className="className" icon={<FontAwesomeIcon icon={solid("magnifying-glass")} />}>Pesquisar</Button>
+        <aside className={`bs_main_content_form`} style={{maxHeight: `${mainHeightValue}px`}}>
+            <form action="" onSubmit={handleSubmit}>
+                <Input setValue={(event) => setSearch(event.target.value)} value={search} />
+                <Button type="submit" icon={<FontAwesomeIcon icon={solid("magnifying-glass")} />}>Pesquisar</Button>
             </form>
         </aside>
     );

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Loading from "../loading";
-import Content from "./form/content";
+import Content from "../form";
 
 const mainViewportDifference = () => {
 
@@ -23,8 +22,6 @@ const mainViewportDifference = () => {
 
 const Main = () => {
     const [mainHeightDifference, setMainHeightDifference] = useState(0);
-    const [isLoading, setLoading] = useState(false);
-    const [bandList, setBandList] = useState(false);
 
     mainViewportDifference().then((data) => {
         setMainHeightDifference(data);
@@ -42,23 +39,9 @@ const Main = () => {
         })
     };
 
-    const loadList = () => {
-        setLoading(true);
-
-        setTimeout(() => {
-            setLoading(false);
-            setBandList(true);
-        }, 2000);
-    }
-
-    const back = () => {
-        setBandList(false);
-    }
-
     return (
         <main className="bs_main" style={{ height: `calc(100vh - ${mainHeightDifference}px)` }}>
-            <Content onSubmit={loadList} onBack={back} isListVisible={bandList} />
-            {isLoading && <Loading />}
+            <Content />
         </main>
     );
 }

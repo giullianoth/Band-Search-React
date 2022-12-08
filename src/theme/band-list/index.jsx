@@ -122,7 +122,7 @@ const BandList = (props) => {
 
     return (
         <section className="bs_main_content_results">
-            <MainHeader data={{ socialNetworks, socialLinks }} title={mainTitle} onBack={props.onBack} />
+            <MainHeader data={{ socialNetworks, socialLinks }} title={mainTitle} />
             <MainResults data={listItems} height={listHeightDifference} />
         </section>
     );
