@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Modal from "../modal";
-import VideoModal from "./video-modal";
+import Modal from "../../modal";
+import VideoModal from "../video-modal";
 
 const Video = (props) => {
 
@@ -22,11 +22,10 @@ const Video = (props) => {
                 </div>
             </article>
             {
-                isModalOpen ?
-                    <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-                        <VideoModal url={props.data.id.videoId} title={title} />
-                    </Modal>
-                    : null
+                isModalOpen &&
+                <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+                    <VideoModal url={props.data.id.videoId} title={title} />
+                </Modal>
             }
         </>
     )

@@ -30,7 +30,7 @@ const listViewportDifference = () => {
     })
 }
 
-const BandList = () => {
+const BandList = (props) => {
 
     const [listHeightDifference, setListHeightDifference] = useState(0);
 
@@ -122,7 +122,7 @@ const BandList = () => {
 
     return (
         <section className="bs_main_content_results">
-            <MainHeader data={{ socialNetworks, socialLinks }} title={mainTitle} />
+            <MainHeader data={{ socialNetworks, socialLinks }} title={mainTitle} onBack={props.onBack} />
             <MainResults data={listItems} height={listHeightDifference} />
         </section>
     );

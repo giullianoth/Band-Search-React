@@ -92,7 +92,8 @@
         }
 
         &.list {
-            height: auto;
+            // height: auto;
+            max-height: 40px !important;
 
             @include setResponsiveDesign(720px) {
                 justify-content: flex-start;

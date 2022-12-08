@@ -15,7 +15,7 @@ const Modal = (props) => {
     }
 
     return isModalOpen
-        ? (
+        && (
             <ReactModal
                 isOpen={isModalOpen}
                 ariaHideApp={false}
@@ -26,8 +26,7 @@ const Modal = (props) => {
                     {props.children}
                 </section>
             </ReactModal>
-        )
-        : null;
+        );
 }
 
 export default Modal;
