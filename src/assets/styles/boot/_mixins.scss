@@ -216,6 +216,28 @@
     border: none;
     background-color: $color-tertiary;
     cursor: pointer;
+    overflow: hidden;
+
+    @include relative;
+
+    &::before {
+        content: "";
+        @include absolute(-100%, -25%);
+        width: 10%;
+        height: 250%;
+        opacity: 0.7;
+
+        transform: rotate(20deg);
+        filter: blur(10px);
+
+        background-color: $color-white;
+
+        @include transition;
+    }
+
+    &:hover::before {
+        left: 120%;
+    }
 
     svg {
         @include setResponsiveDesign(375px) {

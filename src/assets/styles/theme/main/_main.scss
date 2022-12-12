@@ -2,6 +2,7 @@
 @import "form";
 @import "band-list";
 @import "../dark-theme/main";
+@import "../error/error";
 
 @include theme() {
     &_main {
@@ -14,6 +15,7 @@
             @include loading;
             @include form;
             @include bandList;
+            @include error;
         }
     }
 }
