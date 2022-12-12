@@ -4,8 +4,6 @@ import Input from "./input";
 import Button from "../button";
 import { useState } from "react";
 
-const formValue = () => document.querySelector(".bs_main_content_form input").value;
-
 const mainHeight = () => {
     let mainHeightValue = null;
 
@@ -27,6 +25,7 @@ const Form = (props) => {
     const [mainHeightValue, setMainHeightValue] = useState(0);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
+    const [formClass, setFormClass] = useState("bs_main_content_form");
 
     mainHeight().then((height) => {
         setMainHeightValue(height);
@@ -46,11 +45,18 @@ const Form = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(search);
+
+        if (search.length !== 0) {
+            setLoading(true);
+            props.isLoading(true);
+
+            setFormClass(formClass.includes("list") ? formClass : `${formClass} list`);
+            props.search(search);
+        }
     }
 
     return (
-        <aside className={`bs_main_content_form`} style={{maxHeight: `${mainHeightValue}px`}}>
+        <aside className={formClass} style={{ maxHeight: `${mainHeightValue}px` }}>
             <form action="" onSubmit={handleSubmit}>
                 <Input setValue={(event) => setSearch(event.target.value)} value={search} />
                 <Button type="submit" icon={<FontAwesomeIcon icon={solid("magnifying-glass")} />}>Pesquisar</Button>

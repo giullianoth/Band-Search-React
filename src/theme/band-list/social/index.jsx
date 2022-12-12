@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 const socialInfos = {
     facebook: {
@@ -40,11 +40,16 @@ const socialInfos = {
 }
 
 const Social = (props) => {
+
+    Object.keys(socialInfos).forEach((social) => {
+        // console.log(social, props.network);
+    })
+
     return (
         <li>
-            <a href={props.href} style={{ backgroundColor: socialInfos[props.network].color }} target="_blank">
+            {/* <a href={props.href} style={{ backgroundColor: socialInfos[props.network].color }} target="_blank">
                 {socialInfos[props.network].title}
-            </a>
+            </a> */}
         </li>
     );
 }
