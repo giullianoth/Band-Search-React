@@ -43,18 +43,14 @@ const Social = (props) => {
 
     let isValidSocialNetwork = props.network ? Object.keys(socialInfos).some((social) => social === props.network) : false;
 
-    return (
-        <>
-            {
-                isValidSocialNetwork &&
-                <li>
-                    <a href={props.href} style={{ backgroundColor: socialInfos[props.network].color }} target="_blank">
-                        {socialInfos[props.network].title}
-                    </a>
-                </li>
-            }
-        </>
-    );
+    return isValidSocialNetwork
+        && (
+            <li>
+                <a href={props.href} style={{ backgroundColor: socialInfos[props.network].color }} target="_blank">
+                    {socialInfos[props.network].title}
+                </a>
+            </li>
+        );
 }
 
 export default Social;
