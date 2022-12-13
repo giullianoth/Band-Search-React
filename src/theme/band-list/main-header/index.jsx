@@ -8,7 +8,7 @@ const MainHeader = (props) => {
         <div className="bs_main_content_results_header">
             <Header><h1>{props.title}</h1></Header>
             <MainSocialResults data={props.data ?? null} />
-            <Button className="back">Voltar</Button>
+            <Button className="back" onClick={props.onBack}>Voltar</Button>
         </div>
     );
 }

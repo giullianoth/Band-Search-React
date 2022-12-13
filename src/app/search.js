@@ -12,9 +12,35 @@ const TicketMasterSearch = async (search) => {
     const url = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${search}&apikey=${ApiKey}`;
 
     try {
-        return await Search(url).then((data) => data._embedded.attractions);
+
+        let rawData = await Search(url).then((data) => data._embedded.attractions);
+
+        let isMusic = rawData.some((itemData) =>
+            itemData.classifications.some((itemClassification) =>
+                itemClassification.segment.name === "Music"
+            )
+        );
+
+        if (!isMusic) {
+            return `Sua pesquisa por "${search}" é inválida. Apenas bandas ou artistas (cantores).`;
+        }
+
+        let socialInfo = rawData.find((itemData) =>
+            itemData.classifications.find((itemClassification) =>
+                itemClassification.segment.name === "Music"
+            )
+        ).externalLinks;
+
+        let mainTitle = rawData.find((itemData) =>
+            itemData.classifications.find((itemClassification) =>
+                itemClassification.segment.name === "Music"
+            )
+        ).name;
+
+        return { socialInfo, mainTitle };
+
     } catch (error) {
-        return "Sua pesquisa não retornou resultados. Tente de novo."
+        return `Sua pesquisa por "${search}" não retornou resultados. Tente de novo.`
     }
 }
 
@@ -23,9 +49,9 @@ const YouTubeSearch = async (search) => {
     const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${search}&key=${ApiKey}`;
 
     try {
-        return await Search(url).then((data) => data.items);
+        return await Search(url).then((data) => data.items.filter((video) => video.id.kind.includes("video")));
     } catch (error) {
-        return "Sua pesquisa não retornou resultados. Tente de novo."
+        return `Sua pesquisa por "${search}" não retornou resultados. Tente de novo.`
     }
 }
 

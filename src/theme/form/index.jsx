@@ -3,22 +3,7 @@ import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 import Input from "./input";
 import Button from "../button";
 import { useState } from "react";
-
-const mainHeight = () => {
-    let mainHeightValue = null;
-
-    return new Promise((resolve) => {
-
-        let getHeight = setInterval(() => {
-            mainHeightValue = document.querySelector(".bs_main")?.offsetHeight;
-
-            if (mainHeightValue) {
-                resolve(mainHeightValue);
-                clearInterval(getHeight);
-            }
-        }, 100);
-    })
-}
+import { mainHeightViewportValue } from "../../app/set-viewport";
 
 const Form = (props) => {
 
@@ -27,18 +12,18 @@ const Form = (props) => {
     const [loading, setLoading] = useState(false);
     const [formClass, setFormClass] = useState("bs_main_content_form");
 
-    mainHeight().then((height) => {
+    mainHeightViewportValue().then((height) => {
         setMainHeightValue(height);
     })
 
     window.onload = () => {
-        mainHeight().then((height) => {
+        mainHeightViewportValue().then((height) => {
             setMainHeightValue(height);
         })
     };
 
     window.onresize = () => {
-        mainHeight().then((height) => {
+        mainHeightViewportValue().then((height) => {
             setMainHeightValue(height);
         })
     };

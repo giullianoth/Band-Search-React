@@ -1,29 +1,10 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import { TicketMasterSearch, YouTubeSearch } from "../../app/search";
+import { mainViewportDifferenceValue } from "../../app/set-viewport";
 import BandList from "../band-list";
 import Error from "../error";
 import Form from "../form";
 import Loading from "../loading";
-
-const mainViewportDifference = () => {
-
-    let headerHeight = null;
-    let footerHeight = null;
-
-    return new Promise((resolve) => {
-
-        let getHeader = setInterval(() => {
-            headerHeight = document.querySelector(".bs_header")?.offsetHeight;
-            footerHeight = document.querySelector(".bs_footer")?.offsetHeight;
-
-            if (headerHeight && footerHeight) {
-                resolve(headerHeight + footerHeight);
-                clearInterval(getHeader);
-            }
-        }, 100);
-    })
-}
 
 const Main = () => {
     const [mainHeightDifference, setMainHeightDifference] = useState(0);
@@ -31,28 +12,23 @@ const Main = () => {
     const [bandList, setBandList] = useState(false);
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
-    const [bandData, setBandData] = useState({
-        mainTitle: "",
-        socialInfo: {},
-        listItems: []
-    });
+    const [bandData, setBandData] = useState({});
 
     let bandDataUpdate = null;
 
-    mainViewportDifference().then((data) => {
-        setMainHeightDifference(data);
+    mainViewportDifferenceValue().then((height) => {
+        setMainHeightDifference(height);
     })
 
     window.onload = () => {
-        mainViewportDifference().then((data) => {
-            setMainHeightDifference(data);
+        mainViewportDifferenceValue().then((height) => {
+            setMainHeightDifference(height);
         })
     };
 
     window.onresize = () => {
-        mainViewportDifference().then((data) => {
-            setMainHeightDifference(data);
+        mainViewportDifferenceValue().then((height) => {
+            setMainHeightDifference(height);
         })
     };
 
@@ -66,45 +42,21 @@ const Main = () => {
         setBandList(false);
 
         try {
-            const dataInfo = await TicketMasterSearch(search)
-                .then((data) => data);
+            const dataInfo = await TicketMasterSearch(search).then((data) => data);
 
             if (typeof (dataInfo) === "object") {
 
-                const isMusic = dataInfo.some((itemData) =>
-                    itemData.classifications.some((itemClassification) =>
-                        itemClassification.segment.name === "Music"
-                    )
+                const { socialInfo, mainTitle } = dataInfo;
+
+                const listItems = await YouTubeSearch(search).then((data) =>
+                    data.filter((video) => video.id.kind.includes("video"))
                 );
 
-                if (isMusic) {
-                    const socialInfo = dataInfo.find((itemData) =>
-                        itemData.classifications.find((itemClassification) =>
-                            itemClassification.segment.name === "Music"
-                        )
-                    ).externalLinks;
+                bandDataUpdate = { mainTitle, socialInfo, listItems };
+                setBandData({ ...bandDataUpdate });
 
-                    const mainTitle = dataInfo.find((itemData) =>
-                        itemData.classifications.find((itemClassification) =>
-                            itemClassification.segment.name === "Music"
-                        )
-                    ).name;
-
-                    const listItems = await YouTubeSearch(search).then((data) =>
-                        data.filter((video) => video.id.kind.includes("video"))
-                    );
-
-                    bandDataUpdate = { mainTitle, socialInfo, listItems };
-                    setBandData({...bandDataUpdate});
-
-                    setLoading(false);
-                    setBandList(true);
-
-                } else {
-                    setIsError(true);
-                    setErrorMessage(`Sua pesquisa por ${search} é inválida. Apenas bandas ou artistas (cantores).`);
-                    setLoading(false);
-                }
+                setLoading(false);
+                setBandList(true);
 
             } else {
                 setIsError(true);

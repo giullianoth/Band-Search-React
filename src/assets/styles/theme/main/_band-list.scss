@@ -155,9 +155,9 @@
         }
 
         .back {
+            @include button;
             @include absolute(40px, unset);
             right: 0;
-            @include button;
 
             font-size: calc($font-size-small * 0.8);
             padding: {
