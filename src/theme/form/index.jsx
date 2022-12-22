@@ -31,13 +31,11 @@ const Form = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (search.length !== 0) {
-            setLoading(true);
-            props.isLoading(true);
+        setLoading(true);
+        props.isLoading(true);
 
-            setFormClass(formClass.includes("list") ? formClass : `${formClass} list`);
-            props.search(search);
-        }
+        setFormClass(formClass.includes("list") ? formClass : `${formClass} list`);
+        props.search(search);
     }
 
     return (

@@ -41,33 +41,39 @@ const Main = () => {
         setIsError(false);
         setBandList(false);
 
-        try {
-            const dataInfo = await TicketMasterSearch(search).then((data) => data);
+        if (search.length !== 0) {
+            try {
+                const dataInfo = await TicketMasterSearch(search).then((data) => data);
 
-            if (typeof (dataInfo) === "object") {
+                if (typeof (dataInfo) === "object") {
 
-                const { socialInfo, mainTitle } = dataInfo;
+                    const { socialInfo, mainTitle } = dataInfo;
 
-                const listItems = await YouTubeSearch(search).then((data) =>
-                    data.filter((video) => video.id.kind.includes("video"))
-                );
+                    const listItems = await YouTubeSearch(search).then((data) =>
+                        data.filter((video) => video.id.kind.includes("video"))
+                    );
 
-                bandDataUpdate = { mainTitle, socialInfo, listItems };
-                setBandData({ ...bandDataUpdate });
+                    bandDataUpdate = { mainTitle, socialInfo, listItems };
+                    setBandData({ ...bandDataUpdate });
 
-                setLoading(false);
-                setBandList(true);
+                    setLoading(false);
+                    setBandList(true);
 
-            } else {
+                } else {
+                    setIsError(true);
+                    setErrorMessage(dataInfo);
+                    setLoading(false);
+                }
+            } catch (error) {
                 setIsError(true);
-                setErrorMessage(dataInfo);
+                setErrorMessage("Erro inesperado na pesquisa.");
                 setLoading(false);
+                console.log(error);
             }
-        } catch (error) {
+        } else {
             setIsError(true);
-            setErrorMessage("Erro inesperado na pesquisa.");
+            setErrorMessage("Digite o nome da banda ou artista.");
             setLoading(false);
-            console.log(error);
         }
     }
 
